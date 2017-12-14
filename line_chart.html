@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>linechart_xian</title>
+	<style>
+		#container{
+			width:500px;
+			height: 250px;
+			background: #ddd;
+		}
+		path{
+		    fill: none;
+		    stroke: #f00;
+		    stroke-width: 2;
+		}
+
+
+		.domain,.tick line{
+			stroke: gray;
+			stroke-width: 1;
+		}
+
+		.linecircle {
+		  fill: blue;
+		}
+		.linecircle:hover {
+		  fill: steelblue;
+		}
+	</style>
+</head>
+<body>
+<div id="container"></div>
+<script type="text/javascript" src="http://d3js.org/d3.v3.js"></script>    <!-- d3库的引用 -->
+<script>
+	var width=500,
+		height=250,
+		margin={left:50,top:30,right:30,bottom:20},
+		g_width=width-margin.left-margin.right,
+		g_height=height-margin.top-margin.bottom;
+
+	//svg
+	var svg = d3.select("#container")
+				.append('svg')
+	//width,height
+				.attr("width", width)
+				.attr("height", height);
+
+
+	var g = d3.select("svg")
+			.append('g')
+			.attr("transform","translate("+margin.left+","+margin.top+")");
+
+
+	//var data = [1,3,5,7,8,4,3,7];
+	var datas = new Array(20);
+	console.log(datas.length);
+	for(var i = 0; i < datas.length; i++){
+		datas[i]=Math.random()*100;
+	}
+	console.log(datas);
+	/*缩放*/
+	var scale_x = d3.scale.linear()
+					.domain([0,datas.length-1])
+					.range([0,g_width]);
+
+	var scale_y = d3.scale.linear()
+					.domain([0,d3.max(datas)])
+					.range([g_height,0]);
+
+
+	/*line chart*/
+	var line_generator=d3.svg.line()                  //面积图的话就line改变成area
+						.x(function(d,i){return scale_x(i);})  //0,1,2,3...
+						.y(function(d){return scale_y(d);})  //1,3,5      
+						.interpolate("linear");
+
+	/*面积图表的*/
+	var area_generator=d3.svg.area()                  //面积图的话就line改变成area
+						.x(function(d,i){return scale_x(i);})  //1,1,2,3...
+						.y0(g_height)  //1,3,5           
+						.y1(function(d){return scale_y(d);})  //1,3,5    
+						.interpolate("cardinal");             //曲线圆角
+
+	/*line chart*/
+	var path = d3.select("g")
+	.append('path')
+	.attr("d",line_generator(datas));
+
+	g.selectAll('text')
+	.data(datas)
+	.enter()
+	.append('text')
+	.attr('opacity',0)
+	.attr('id',function(d,i){ return "test_"+i;})
+	.attr('x',function(d,i){return scale_x(i)-10;})
+	.attr('y',function(d){return scale_y(d)-5;})
+	.text(function(d){return d.toFixed(1);});
+
+	var g1 = g.selectAll('circle')
+	  .data(datas)
+	  .enter()
+	  .append('circle')
+	  .attr('class', 'linecircle')
+	  .attr('cx', function(d,i){return scale_x(i);})
+	  .attr('cy', function(d){return scale_y(d);})
+	  .attr('r', 3.5)
+	  .on('mouseover', function(d, i) {
+	    d3.select(this).transition().duration(500).attr('r', 5);
+	    document.getElementById('test_'+i).style.opacity = 1;
+	  })
+	  .on('mouseout', function(d,i) {
+	    d3.select(this).transition().duration(500).attr('r', 3.5);
+	    document.getElementById('test_'+i).style.opacity = 0;
+	  });
+
+
+	/*面积图表的*/
+	/*d3.select("g")
+	.append('path')
+	.attr("d",line_generator(data));
+	.style("fill","#999")*/
+
+
+	var x_axis = d3.svg.axis().scale(scale_x).orient("bottom").ticks(20),
+		y_axis = d3.svg.axis().scale(scale_y).orient("left").ticks(10);
+
+	g.append('g')
+	.call(x_axis)
+	.attr('transform', 'translate(0,'+g_height+')');
+
+	g.append('g')
+	.call(y_axis)
+	.append('text')
+	.text('Price($)')
+	.attr('transform', 'rotate(-90)')
+	.attr('text-anchor', 'end')
+	.attr('dy', '1em');
+
+</script>
+</body>
+</html>
