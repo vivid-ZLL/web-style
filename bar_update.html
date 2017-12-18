@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Bar update test</title>
+	<style>
+		.axis path,
+		.axis line {
+			fill: none;
+			stroke: black;
+			shape-rendering: crispEdges;
+		}		
+		.axis text {
+			font-family: sans-serif;
+			font-size: 11px;
+		}
+	</style>
+</head>
+<body>
+	<script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>  
+	<script type="text/javascript">
+		var w = 800,
+			h = 500,
+			timegap = 3000,
+			padding = 25,
+			colors = ['grey','green','blue','pink','purple','black','yellow','orange','red','#009fee'];
+
+		var svg = d3.select('body').append('svg').attr('width',w).attr('height',h);
+		var initiallen = 10,dataset = [];
+		for(var i = 0; i < initiallen; i++){
+			dataset[i] = Math.floor(Math.random()*60);
+		}
+
+		var xScale = d3.scale.ordinal().domain(d3.range(dataset.length)).rangeRoundBands([0, w - padding], 0.05);
+		var yScale = d3.scale.linear().domain([0,60]).range([h-padding,padding]);
+
+		//把初始数组转为条形图
+		var rects = svg.selectAll('rect').data(dataset).enter()
+					.append('rect')
+					.attr({
+						'width':xScale.rangeBand(),
+						'height':function(d,i){
+							return h - yScale(d) - padding;
+						},
+						'x':function(d,i){
+							return xScale(i) + padding;
+						},
+						'y':function(d,i){
+							return yScale(d);
+						},
+						'fill':function(d,i){
+							return colors[i];
+						}
+					});
+		
+
+			// 给条形图加上坐标轴
+		var xAxis = d3.svg.axis().scale(xScale).orient('bottom').ticks(10);
+		var yAxis = d3.svg.axis().scale(yScale).orient('left').ticks(20);
+
+		var addxAxis = svg.append('g').call(xAxis).classed('axis',true).attr('transform','translate('+ padding +','+ (h-padding) +')');
+		var addyAxis = svg.append('g').call(yAxis).classed('axis',true).attr('transform','translate('+ padding +',0)');
+
+		//每隔一段时间更新数据
+		
+		var update = setInterval(function(){
+			var newData = Math.floor(Math.random()*60);
+			dataset.pop();
+			dataset.unshift(newData);
+			console.log(dataset);
+
+			var newrect = svg.selectAll('rect').data(dataset).enter()
+					.append('rect').attr({
+						'width':xScale.rangeBand(),
+						'height':h - yScale(newData) - padding,
+						'x':w,
+						'y':yScale(newData),
+						'fill':function(d,i){
+							return colors[parseInt(Math.random()*9)];
+						}
+					});		
+
+			svg.selectAll('rect').data(dataset)
+			.transition()
+			.duration(500)
+			.attr({
+				'width':xScale.rangeBand(),
+				'height':function(d,i){
+					return h - yScale(d) - padding;
+				},
+				'x':function(d,i){
+					return xScale(i) + padding;
+				},
+				'y':function(d,i){
+					return yScale(d);
+				}
+			});
+
+			},1000);
+	</script>
+</body>
+</html>
