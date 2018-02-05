@@ -1,0 +1,121 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Super-N-in-One</title>
+
+<script src="js/jquery-1.8.3.min.js"></script>
+
+</head>
+<style type="text/css">
+*{ margin:0; padding:0; list-style:none;}
+body{ /*background-color: rgb(68,68,68);*/ overflow: auto; };
+img{ border:0;}
+.page{ width: 1300px;height: 900px; position: relative;;overflow: hidden;margin: 5px auto 0 auto;}
+.bx1 { width: 1300px;height: 30px;position: relative;overflow: hidden;border:solid black 1px;text-align: center; display:table-cell;vertical-align: middle;border-radius: 3px; }
+.bx2 { width: 1300px;height: 740px;position: relative;overflow: hidden;/*background-color: red;*/ padding-top: 10px;}
+.bx2 ul {position: absolute; left: 0;top: 0;}
+.bx2 ul li {width: 1300px;740px;}
+.left1 { position:absolute; top:360px; left:20px; width:28px; height:51px; z-index:9; cursor:pointer;}
+.right1 {position:absolute; top:360px; right:20px; width:28px; height:51px; z-index:9; cursor:pointer;}
+
+.bx3 { width: 1300px;overflow: hidden;padding-top: 10px; }
+.bx3_pic {height: 82px;overflow: hidden;width:1240px;position:relative;float:left; }
+.bx3_pic ul {position: absolute;top: 0;left: 0;}
+.bx3_pic ul li {width: 80px;height: 80px;margin-right: 5px;padding: 1px;float: left;}
+.bx3_pic ul li.on{ border:1px solid red; padding:0;}
+.left2 {width: 16px;text-align: center;height: 18px;margin-top: 40px;margin-right: 20px;cursor: pointer;float: left; }
+.right2 {width:16px; text-align:center; height:18px; margin-top:40px;cursor:pointer;float:right;}
+
+</style>
+<body>
+<!-- 代码begin -->
+<div class="page" id="demo1">
+	<div class="bx1" id="info">
+		Super-N-in-One ID <select name="dev_id" id="dev_id" style="margin-right: 20px;">
+		<option value="iot-1">iot-1</option>
+		<option value="iot-2">iot-2</option>
+		<option value="iot-3">iot-3</option>
+		<option value="camera-spritzer-1_test">camera-spritzer-1_test</option>
+		</select>
+		Mode <select name="mode_opt" id="mode_opt" style="margin-right: 20px;">
+		<option value="One by One">One by One</option>
+		<option value="Sequence">Sequence</option>
+		</select>
+		Interval(Sec) <input type="text" name="Interval" style="margin-right: 20px;"/>
+		Resolution <select name="resolution" id="resolution" style="margin-right: 20px;">
+					<option value="VGA">VGA</option>
+					<option value="HD">HD</option>
+				</select>
+		<input type="button" id="btn" name="btn" value="Shutter"/>
+	</div>
+	<div class="bx2" id="Big_picture">
+		<div class="left1" id="left1"><img src="images/index_tab_l.png" width="28" height="51" alt="" /></div>
+		<div class="right1" id="right1"><img src="images/index_tab_r.png" width="28" height="51" alt=""></div>
+		<ul>
+			<li><a href="javascript:;"><img src="images/b1.jpg" width="1280" height="720" alt="" style="object-fit: none;"></a></li>
+			<li><a href="javascript:;"><img src="images/b2.jpg" width="1280" height="720" alt="" style="object-fit: none;"></a></li>
+			<li><a href="javascript:;"><img src="images/b3.jpg" width="1280" height="720" alt="" style="object-fit: none;"></a></li>
+			<li><a href="javascript:;"><img src="images/b4.jpg" width="1280" height="720" alt="" style="object-fit: none;"></a></li>
+			<li><a href="javascript:;"><img src="images/b5.jpg" width="1280" height="720" alt="" style="object-fit: none;"></a></li>
+			<li><a href="javascript:;"><img src="images/s1.jpg" width="1280" height="720" alt="" style="object-fit: none;"></a></li>
+			<li><a href="javascript:;"><img src="images/s1.jpg" width="1280" height="720" alt="" style="object-fit: none;"></a></li>
+			<li><a href="javascript:;"><img src="images/s1.jpg" width="1280" height="720" alt="" style="object-fit: none;"></a></li>
+			<li><a href="javascript:;"><img src="images/s1.jpg" width="1280" height="720" alt="" style="object-fit: none;"></a></li>
+			<li><a href="javascript:;"><img src="images/s1.jpg" width="1280" height="720" alt="" style="object-fit: none;"></a></li>
+			<li><a href="javascript:;"><img src="images/s1.jpg" width="1280" height="720" alt="" style="object-fit: none;"></a></li>
+			<li><a href="javascript:;"><img src="images/s1.jpg" width="1280" height="720" alt="" style="object-fit: none;"></a></li>
+			<li><a href="javascript:;"><img src="images/s1.jpg" width="1280" height="720" alt="" style="object-fit: none;"></a></li>
+			<li><a href="javascript:;"><img src="images/s1.jpg" width="1280" height="720" alt="" style="object-fit: none;"></a></li>
+		</ul>
+	</div>
+	<div class="bx3" id="small_picture">
+		<div class="left2" id="left2"><img src="images/feel3.png" width="9" height="18"  alt=""></div>
+		<div class="bx3_pic clearfix" id="bx3_pic">
+			<ul>
+				<li><a href="javascript:;"><img src="images/s1.jpg" width="80" height="80" alt=""></a></li>
+				<li><a href="javascript:;"><img src="images/s2.jpg" width="80" height="80" alt=""></a></li>
+				<li><a href="javascript:;"><img src="images/s3.jpg" width="80" height="80" alt=""></a></li>
+				<li><a href="javascript:;"><img src="images/s4.jpg" width="80" height="80" alt=""></a></li>
+				<li><a href="javascript:;"><img src="images/s5.jpg" width="80" height="80" alt=""></a></li>
+				<li><a href="javascript:;"><img src="images/b1.jpg" width="80" height="80" alt=""></a></li>
+				<li><a href="javascript:;"><img src="images/b1.jpg" width="80" height="80" alt=""></a></li>
+				<li><a href="javascript:;"><img src="images/b1.jpg" width="80" height="80" alt=""></a></li>
+				<li><a href="javascript:;"><img src="images/b1.jpg" width="80" height="80" alt=""></a></li>
+				<li><a href="javascript:;"><img src="images/b1.jpg" width="80" height="80" alt=""></a></li>
+				<li><a href="javascript:;"><img src="images/b1.jpg" width="80" height="80" alt=""></a></li>
+				<li><a href="javascript:;"><img src="images/b1.jpg" width="80" height="80" alt=""></a></li>
+				<li><a href="javascript:;"><img src="images/b1.jpg" width="80" height="80" alt=""></a></li>
+				<li><a href="javascript:;"><img src="images/b1.jpg" width="80" height="80" alt=""></a></li>
+			</ul>
+		</div>
+		<div class="right2" id="right2"><img src="images/feel4.png" width="9" height="18"  alt=""></div>
+	</div>
+</div>
+
+
+<script src="js/pic_tab.js"></script>
+<script type="text/javascript">
+jq('#demo1').banqh({
+	box:"#demo1",//总框架
+	pic:"#Big_picture",//大图框架
+	pnum:"#small_picture",//小图框架
+	prev_btn:"#left2",//小图左箭头
+	next_btn:"#right2",//小图右箭头
+	prev:"#left1",//大图左箭头
+	next:"#right1",//大图右箭头
+	autoplay:true,//是否自动播放
+	interTime:5000,//图片自动切换间隔
+	delayTime:400,//切换一张图片时间
+	pop_delayTime:400,//弹出框切换一张图片时间
+	order:0,//当前显示的图片（从0开始）
+	picdire:true,//大图滚动方向（true为水平方向滚动）
+	mindire:true,//小图滚动方向（true为水平方向滚动）
+	min_picnum:14,//小图显示数量
+})
+</script>
+<!-- 代码end
+
+</body>
+</html>
+
